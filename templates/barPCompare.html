@@ -1,0 +1,137 @@
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/data.js"></script>
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
+
+   <nav class="navbar navbar-toggleable-md navbar-light bg-faded py-0" style="font-size:small">
+  <button class="navbar-toggler navbar-toggler-right py-0" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon py-0"></span>
+  </button>
+  <a class="navbar-brand py-0" href="/home">Home</a>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto py-0">
+      <li class="nav-item active">
+        <a class="nav-link py-0" href="/page1">Average Salary Title </a>
+      </li>
+    <li class="nav-item active">
+        <a class="nav-link py-0" href="/page3">Annual Salary Budget </a>
+      </li>
+            <li class="nav-item active">
+        <a class="nav-link py-0" href="/">Total Salary Distribution</a>
+      </li>
+            <li class="nav-item active">
+        <a class="nav-link py-0" href="/OrganizationBreakdown">Organization Breakdown %</a>
+      </li>
+            <li class="nav-item active">
+        <a class="nav-link py-0" href="/OrganizationBreakdownBar/GEORGIA%20INSTITUTE%20OF%20TECHNOLOGY/10/2016">Organization Breakdown </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<style>
+    .cc {
+    display: inline-block;
+    height: 90%;
+    width: 47%;
+}
+</style>
+<div>
+    <div id="container" class="cc"></div>
+     <div id="container2" class="cc"></div> 
+</div>  
+<script>
+// Create the chart
+Highcharts.chart('container', {
+    chart: {
+        type: 'column'
+    },
+    title: {
+        text: '{{t}}'
+    },
+    xAxis: {
+        type: 'category'
+    },
+    yAxis: {
+        title: {
+            text: 'Sum of Salaries (USD)'
+        }
+
+    },
+    legend: {
+        enabled: false
+    },credits: {
+        enabled: false
+    },
+    plotOptions: {
+        series: {
+            borderWidth: 0,
+            dataLabels: {
+                enabled: true,
+                format: '${point.y:.2f}'
+            }
+        }
+    },
+
+    tooltip: {
+        headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+        pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>${point.y:.2f}</b> Paid in Salaries<br/>'
+    },
+
+    series: [{
+        name: 'Sum',
+        colorByPoint: true,
+        data: {{l|tojson|safe}}
+    }]
+});
+Highcharts.chart('container2', {
+    chart: {
+        type: 'column'
+    },
+    title: {
+        text: '{{t}}'
+    },
+    xAxis: {
+        type: 'category'
+    },
+    yAxis: {
+        title: {
+            text: 'Sum of Salaries (USD)'
+        }
+
+    },
+    legend: {
+        enabled: false
+    },credits: {
+        enabled: false
+    },
+    plotOptions: {
+        series: {
+            borderWidth: 0,
+            dataLabels: {
+                enabled: true,
+                format: '${point.y:.2f}'
+            }
+        }
+    },
+
+    tooltip: {
+        headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+        pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>${point.y:.2f}</b> Paid in Salaries<br/>'
+    },
+
+    series: [{
+        name: 'Sum',
+        colorByPoint: true,
+        data: {{y|tojson|safe}}
+    }]
+});
+</script>

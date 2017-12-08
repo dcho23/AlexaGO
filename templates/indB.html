@@ -1,0 +1,143 @@
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<!--
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!-- jQuery library 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript 
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!--
+<div class="btn-group">
+  <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Filter By Year
+  </button>
+  <div class="dropdown-menu">
+      {% for org in y %}
+    <a class="dropdown-item" style="padding-left:10px" href="/organizationSalary/{{org.Organization}}">{{org.Organization}}</a>
+    <br>
+    {% endfor %}
+  </div>
+</div>
+-->
+  <!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
+<nav class="navbar navbar-toggleable-md navbar-light bg-faded py-0" style="font-size:small">
+  <button class="navbar-toggler navbar-toggler-right py-0" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon py-0"></span>
+  </button>
+  <a class="navbar-brand py-0" href="/home">Home</a>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto py-0">
+      <li class="nav-item active">
+        <a class="nav-link py-0" href="/page1">Average Salary Title </a>
+      </li>
+    <li class="nav-item active">
+        <a class="nav-link py-0" href="/page3">Annual Salary Budget </a>
+      </li>
+            <li class="nav-item active">
+        <a class="nav-link py-0" href="/">Total Salary Distribution</a>
+      </li>
+            <li class="nav-item active">
+        <a class="nav-link py-0" href="/OrganizationBreakdown">Organization Breakdown %</a>
+      </li>
+            <li class="nav-item active">
+        <a class="nav-link py-0" href="/OrganizationBreakdownBar/GEORGIA%20INSTITUTE%20OF%20TECHNOLOGY/10/2016">Organization Breakdown </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<style>
+    .container {
+    height: 80%;
+    width: 100%;
+    padding: 15px;
+}
+    </style>
+
+    <div id="container1" class="container"></div>
+</div>  
+<script>
+// Build the chart
+Highcharts.chart('container1', {
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: 'pie'
+    },
+     credits: {
+        enabled: false
+    },exporting: { enabled: false,allowHTML: false },
+    title: {
+        text: '{{t}}'
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    },
+    plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: false
+            }
+        }
+    },
+    series: [{
+        name: 'Brands',
+        colorByPoint: true,
+        data: {{l|tojson|safe}}
+    }]
+});
+</script>
+<div style="text-align: center">
+<form action='' name='myform' id="myform" method='GET'>
+  <div class="form-group" style="display:inline-block">
+    <select class="form-control" id="exampleFormControlSelect1">
+      {% for org in y %}
+      <option>{{org.Organization}}</option>
+    {% endfor %}
+    </select>
+  </div>
+  <div class="form-group" style="display:inline-block">
+    <select class="form-control" id="exampleFormControlSelect2">
+      {% for org in y %}
+      <option>{{org.Organization}}</option>
+    {% endfor %}
+    </select>
+  </div>
+        <button  action='submit' type="submit" id="btnsubmit" class="btn btn-sm btn-default">Submit</button>
+</form>
+</div>
+      <script>
+  // Shorthand for $(document).ready();
+  $(function() {
+   $('#myform').submit(function(){
+     var fr = $('#exampleFormControlSelect1').val();
+     var sec = $('#exampleFormControlSelect2').val();
+     $(this).attr('action', "/OrganizationBreakdownComp/" + fr + "/" +sec);
+   });
+  });
+ </script>
+<div style="text-align: center; margin-top:-20px">
+<div class="dropdown" style="display:inline-block">
+  <a class="btn btn-secondary  btn-sm dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Choose Organization
+  </a>
+
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+      {% for org in y %}
+    <a class="dropdown-item" href="/OrganizationBreakdownInd/{{org.Organization}}">{{org.Organization}}</a> | 
+    {% endfor %}
+  </div>
+</div>
+</div>

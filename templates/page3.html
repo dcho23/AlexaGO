@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Annual Salary Budget</title>
+    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css"
+          integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w"
+          crossorigin="anonymous">
+
+    <!-- highcharts stuff -->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/series-label.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+
+  </head>
+
+  <!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
+<nav class="navbar navbar-toggleable-md navbar-light bg-faded py-0">
+  <button class="navbar-toggler navbar-toggler-right py-0" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon py-0"></span>
+  </button>
+  <a class="navbar-brand py-0" href="/home">Home</a>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto py-0">
+      <li class="nav-item active">
+        <a class="nav-link py-0" href="/page1">Average Salary Title </a>
+      </li>
+    <li class="nav-item active">
+        <a class="nav-link py-0" href="/page3">Annual Salary Budget </a>
+      </li>
+            <li class="nav-item active">
+        <a class="nav-link py-0" href="/">Total Salary Distribution</a>
+      </li>
+            <li class="nav-item active">
+        <a class="nav-link py-0" href="/OrganizationBreakdown">Organization Breakdown %</a>
+      </li>
+            <li class="nav-item active">
+        <a class="nav-link py-0" href="/OrganizationBreakdownBar/GEORGIA%20INSTITUTE%20OF%20TECHNOLOGY/10/2016">Organization Breakdown </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+
+    <body>
+    <div class="wrapper">
+      <center>
+        <br>
+        <h1>Annual Salary Budget by School </h1>
+      </center>
+    </div>
+  </body>
+
+
+  <!-- highchart here -->
+  <div id="container"></div>
+  <script>
+
+    Highcharts.chart('container', {
+
+      title: {
+        text: ''
+      },
+
+
+      yAxis: {
+        title: {
+          text: 'Annual Salary Budget'
+        }
+      },
+      legend: {
+        layout: 'vertical',
+        align: 'right',
+        verticalAlign: 'middle'
+      },
+
+      plotOptions: {
+        series: {
+          label: {
+            connectorAllowed: false
+          },
+          pointStart: 2010
+        }
+      },
+
+      //series: yearlyBudget
+       series: [{
+        name: '{{schools[0]}}',
+        data: {{schoolBudget[0]}}
+       }, {
+        name: '{{schools[1]}}',
+        data: {{schoolBudget[1]}}
+      }, {
+        name: '{{schools[2]}}',
+        data: {{schoolBudget[2]}}
+      }, {
+        name: '{{schools[3]}}',
+        data: {{schoolBudget[3]}}
+      }, {
+        name: '{{schools[4]}}',
+        data: {{schoolBudget[4]}}
+      }, {
+        name: '{{schools[5]}}',
+        data: {{schoolBudget[5]}}
+      }],
+      
+
+      responsive: {
+        rules: [{
+          condition: {
+            maxWidth: 500
+          },
+          chartOptions: {
+            legend: {
+              layout: 'horizontal',
+              align: 'center',
+              verticalAlign: 'bottom'
+            }
+          }
+        }]
+      }
+
+    });
+
+</script>
+
+<br>
+<label>
+  Filter By School(s)
+</label>
+ <form action="/page3" method = "post">
+  <input type=checkbox name=school value="GEORGIA INSTITUTE OF TECHNOLOGY"> GEORGIA INSTITUTE OF TECHNOLOGY<br>
+  <input type=checkbox name=school value="GEORGIA STATE UNIVERSITY"> GEORGIA STATE UNIVERSITY<br>
+  <input type=checkbox name=school value="KENNESAW STATE UNIVERSITY"> KENNESAW STATE UNIVERSITY<br>
+  <input type=checkbox name=school value="UNIVERSITY OF GEORGIA"> UNIVERSITY OF GEORGIA<br>
+  <input type=checkbox name=school value="GEORGIA SOUTHERN UNIVERSITY"> GEORGIA SOUTHERN UNIVERSITY<br>
+  <input type=checkbox name=school value="VALDOSTA STATE UNIVERSITY"> VALDOSTA STATE UNIVERSITY<br>
+  
+  <input type="submit" value="Submit">
+</form> 
+
+
+</html>

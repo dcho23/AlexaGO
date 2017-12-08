@@ -1,0 +1,105 @@
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<!--
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!-- jQuery library -
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript 
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!--
+<div class="dropdown pull-right">
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Filter Year
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      {% for org in y %}
+    <a class="dropdown-item" href="/organizationSalary/{{org.FiscalYear}}">{{org.FiscalYear}}</a>
+    {% endfor %}
+  </div>
+</div>
+-->
+  <!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
+<nav class="navbar navbar-toggleable-md navbar-light bg-faded py-0" style="font-size:small">
+  <button class="navbar-toggler navbar-toggler-right py-0" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon py-0"></span>
+  </button>
+  <a class="navbar-brand py-0" href="/home">Home</a>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto py-0">
+      <li class="nav-item active">
+        <a class="nav-link py-0" href="/page1">Average Salary Title </a>
+      </li>
+    <li class="nav-item active">
+        <a class="nav-link py-0" href="/page3">Annual Salary Budget </a>
+      </li>
+            <li class="nav-item active">
+        <a class="nav-link py-0" href="/">Total Salary Distribution</a>
+      </li>
+            <li class="nav-item active">
+        <a class="nav-link py-0" href="/OrganizationBreakdown">Organization Breakdown %</a>
+      </li>
+            <li class="nav-item active">
+        <a class="nav-link py-0" href="/OrganizationBreakdownBar/GEORGIA%20INSTITUTE%20OF%20TECHNOLOGY/10/2016">Organization Breakdown </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<div id="container" style="min-width: 90%; height: 90%; padding-bottom: -10cm"></div>
+<script>
+// Build the chart
+Highcharts.chart('container', {
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: 'pie'
+    },
+     credits: {
+        enabled: false
+    },exporting: { enabled: false,allowHTML: false },
+    title: {
+        text: '{{t}}'
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    },
+    plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: false
+            },
+            showInLegend: true
+        }
+    },
+    series: [{
+        name: 'Brands',
+        colorByPoint: true,
+        data: {{l|tojson|safe}}
+    }]
+});
+</script>
+<div  style="text-align: center">
+<div class="btn-group">
+  <button type="button" class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Filter By Year
+  </button>
+  <div class="dropdown-menu">
+      {% for org in y %}
+    <a class="dropdown-item" style="padding-left:10px" href="/organizationSalary/{{org.FiscalYear}}">{{org.FiscalYear}}</a>
+    <br>
+    {% endfor %}
+  </div>
+</div>
+</div>

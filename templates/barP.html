@@ -1,0 +1,166 @@
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/data.js"></script>
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
+
+<nav class="navbar navbar-toggleable-md navbar-light bg-faded py-0" style="font-size:small">
+  <button class="navbar-toggler navbar-toggler-right py-0" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon py-0"></span>
+  </button>
+  <a class="navbar-brand py-0" href="/home">Home</a>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto py-0">
+      <li class="nav-item active">
+        <a class="nav-link py-0" href="/page1">Average Salary Title </a>
+      </li>
+    <li class="nav-item active">
+        <a class="nav-link py-0" href="/page3">Annual Salary Budget </a>
+      </li>
+            <li class="nav-item active">
+        <a class="nav-link py-0" href="/">Total Salary Distribution</a>
+      </li>
+            <li class="nav-item active">
+        <a class="nav-link py-0" href="/OrganizationBreakdown">Organization Breakdown %</a>
+      </li>
+            <li class="nav-item active">
+        <a class="nav-link py-0" href="/OrganizationBreakdownBar/GEORGIA%20INSTITUTE%20OF%20TECHNOLOGY/10/2016">Organization Breakdown </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div id="cc" style="min-width: 80%; height: 75%; margin: 0 auto"></div>
+<script>
+// Create the chart
+Highcharts.chart('cc', {
+    chart: {
+        type: 'column'
+    },
+    title: {
+        text: '{{t}}'
+    },
+    xAxis: {
+        type: 'category'
+    },
+    yAxis: {
+        title: {
+            text: 'Sum of Salaries (USD)'
+        }
+
+    },
+    legend: {
+        enabled: false
+    },credits: {
+        enabled: false
+    },
+    plotOptions: {
+        series: {
+            borderWidth: 0,
+            dataLabels: {
+                enabled: true,
+                format: '${point.y:.2f}'
+            }
+        }
+    },
+
+    tooltip: {
+        headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+        pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>${point.y:.2f}</b> Paid in Salaries<br/>'
+    },
+
+    series: [{
+        name: 'Sum',
+        colorByPoint: true,
+        data: {{l|tojson|safe}}
+    }]
+});
+</script>
+<div style="text-align: center">
+<form action='' name='myform' id="myform" method='GET'>
+  <div class="form-group" style="display:inline-block">
+    <select class="form-control" id="exampleFormControlSelect1">
+      {% for org in oo %}
+      <option>{{org.Organization}}</option>
+    {% endfor %}
+    </select>
+  </div>
+  <div class="form-group" style="display:inline-block">
+    <select class="form-control" placeholder="University" id="exampleFormControlSelect2">
+      {% for org in oo %}
+      <option>{{org.Organization}}</option>
+    {% endfor %}
+    </select>
+  </div>
+    <div class="form-group" style="display:inline-block">
+    <select class="form-control" id="exampleFormControlSelect3">
+      {% for yy in listYears %}
+      <option>{{yy}}</option>
+    {% endfor %}
+    </select>
+  </div>
+     <div class="form-group" style="display:inline-block">
+    <select class="form-control" id="exampleFormControlSelect4">
+      {% for n in numBars %}
+      <option>{{n}}</option>
+    {% endfor %}
+    </select>
+  </div>
+        <button  action='submit' type="submit" id="btnsubmit" class="btn btn-default">Submit</button>
+</form>
+</div>
+
+
+<div style="text-align: center; font-size:small">
+<form action='' name='myform2' id="myform2" method='GET'>
+  <div class="form-group" style="display:inline-block">
+    <select class="form-control" id="exampleSelect1">
+      {% for org in oo %}
+      <option>{{org.Organization}}</option>
+    {% endfor %}
+    </select>
+  </div>
+    <div class="form-group" style="display:inline-block;font-size:small">
+    <select class="form-control" id="exampleSelect2">
+      {% for yy in listYears %}
+      <option>{{yy}}</option>
+    {% endfor %}
+    </select>
+  </div>
+     <div class="form-group" style="display:inline-block; font-size:small">
+    <select class="form-control" id="exampleSelect3">
+      {% for n in numBars %}
+      <option>{{n}}</option>
+    {% endfor %}
+    </select>
+  </div>
+        <button  action='submit' type="submit" id="btnsubmit" class="btn btn-default">Submit</button>
+</form>
+</div>
+
+      <script>
+  $(function() {
+   $('#myform').submit(function(){
+     var one = $('#exampleFormControlSelect1').val();
+     var two = $('#exampleFormControlSelect2').val();
+     var three = $('#exampleFormControlSelect3').val();
+     var four = $('#exampleFormControlSelect4').val();
+     $(this).attr('action', "/OrganizationBreakdownCompBar/" + one + "/" +two +"/"+four+"/"+three);
+   });
+  });
+ </script>
+     <script>
+  $(function() {
+   $('#myform2').submit(function(){
+     var one = $('#exampleSelect1').val();
+     var two = $('#exampleSelect2').val();
+     var three = $('#exampleSelect3').val();
+     $(this).attr('action', "/OrganizationBreakdownBar/" + one + "/" +three +"/"+two);
+   });
+  });
+ </script>
